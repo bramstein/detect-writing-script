@@ -47,7 +47,7 @@ function detect(codepoints, threshold) {
   const result = {};
 
   for (let i = 0; i < names.length; i++) {
-    if (counts[i] / totals[i] > threshold || names[i] === 'PUA') {
+    if (counts[i] / totals[i] > threshold || (names[i] === 'PUA' && counts[i] > 0)) {
       result[names[i]] = {
         count: counts[i],
         total: totals[i]
