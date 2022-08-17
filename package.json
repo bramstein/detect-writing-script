@@ -1,0 +1,15 @@
+{
+  "name": "detect-writing-scripts",
+  "version": "1.0.0",
+  "description": "Detect the writing script given an array of codepoints.",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bram Stein <b.l.stein@gmail.com>",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "@unicode/unicode-15.0.0": "^1.3.0"
+  }
+}
