@@ -1,4 +1,4 @@
-export Script {
+export interface Script {
   count: number;
   total: number;
 }
