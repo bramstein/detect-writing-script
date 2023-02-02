@@ -3,4 +3,6 @@ export interface Script {
   total: number;
 }
 
-export function detect(codepoints: Array<number>, threshold: number): Record<string, Script>;
+function detect(codepoints: Array<number>, threshold: number): Record<string, Script>;
+
+export default detect;
