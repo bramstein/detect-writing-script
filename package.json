@@ -1,6 +1,6 @@
 {
   "name": "detect-writing-scripts",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Detect the writing script given an array of codepoints.",
   "main": "src/index.js",
   "type": "module",
