@@ -1,4 +1,4 @@
-import scripts from '../data/scripts.js';
+import scripts from "../data/scripts.js";
 
 // To make this code as fast as possible we create some
 // auxillary data structures.
@@ -25,12 +25,14 @@ function detect(codepoints, threshold) {
   counts.fill(0);
 
   for (let j = 0; j < codepoints.length; j++) {
-    all:
-    for (let i = 0; i < ranges.length; i++) {
+    all: for (let i = 0; i < ranges.length; i++) {
       for (let k = 0; k < ranges[i].length; k++) {
         // Exit the outer loop (script) if the codepoint has been found.
         // The ranges don't repeat so we won't find the codepoint again.
-        if (codepoints[j] >= ranges[i][k][0] && codepoints[j] <= ranges[i][k][1]) {
+        if (
+          codepoints[j] >= ranges[i][k][0] &&
+          codepoints[j] <= ranges[i][k][1]
+        ) {
           counts[i]++;
           break all; // NOTE: This uses a label to jump out of both loops at once.
         }
@@ -47,10 +49,10 @@ function detect(codepoints, threshold) {
   const result = {};
 
   for (let i = 0; i < names.length; i++) {
-    if (counts[i] / totals[i] > threshold || (names[i] === 'PUA' && counts[i] > 0)) {
+    if (counts[i] / totals[i] > threshold) {
       result[names[i]] = {
         count: counts[i],
-        total: totals[i]
+        total: totals[i],
       };
     }
   }
