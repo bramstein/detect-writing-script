@@ -3,7 +3,7 @@ import { writeFile } from "fs/promises";
 
 // Update this and the version in package.json to upgrade to a new
 // release of the Unicode standard.
-const UNICODE_VERSION = "15.0.0";
+const UNICODE_VERSION = "17.0.0";
 
 async function generate() {
   const result = {};
