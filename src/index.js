@@ -12,7 +12,7 @@ const counts = new Array(names.length);
 // each range and script.
 for (let i = 0; i < ranges.length; i++) {
   for (let j = 0; j < ranges[i].length; j++) {
-    totals[i] += ranges[i][j][1] - ranges[i][j][0];
+    totals[i] += (ranges[i][j][1] - ranges[i][j][0]) + 1;
   }
 }
 
