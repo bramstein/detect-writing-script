@@ -52,7 +52,7 @@ export default [
 	'Proto_Cuneiform',
 	'Old_Permic',
 	'Phags_Pa',
-	'Inscriptional_Pahlav',
+	'Inscriptional_Pahlavi',
 	'Psalter_Pahlavi',
 	'Phoenician',
 	'Inscriptional_Parthian',

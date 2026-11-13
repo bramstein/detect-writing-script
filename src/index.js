@@ -3,7 +3,7 @@ import scripts from "../data/scripts.js";
 // To make this code as fast as possible we create some
 // auxillary data structures.
 const names = Object.keys(scripts);
-const ranges = Object.values(scripts);
+const ranges = Object.values(scripts).map((script) => script.ranges);
 const totals = new Array(names.length).fill(0);
 const counts = new Array(names.length);
 
