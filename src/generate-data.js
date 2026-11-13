@@ -67,9 +67,9 @@ async function generate() {
   result["PUA"] = {
     code: null,
     ranges: [
-      [0xe000, 0xf8ff],
-      [0xf0000, 0xffffd],
-      [0x100000, 0x10fffd],
+      [0xe000, 0xf900],
+      [0xf0000, 0xffffe],
+      [0x100000, 0x10fffe],
     ],
   };
 
