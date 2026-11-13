@@ -3,7 +3,7 @@ import { writeFile } from "fs/promises";
 
 // Update this and the version in package.json to upgrade to a new
 // release of the Unicode standard.
-const UNICODE_VERSION = "17.0.0";
+const UNICODE_VERSION = "18.0.0";
 
 async function generate() {
   const result = {};
@@ -18,7 +18,7 @@ async function generate() {
 
   for (const script of scripts) {
     const { default: ranges } = await import(
-      `@unicode/unicode-${UNICODE_VERSION}/Script/${script}/ranges.js`
+      `@unicode/unicode-${UNICODE_VERSION}/Script/${script}/ranges.mjs`
     );
 
     result[script] = ranges.map((r) => [r.begin, r.end]);
@@ -35,7 +35,7 @@ async function generate() {
 
   for (const emoji of emojis) {
     const { default: ranges } = await import(
-      `@unicode/unicode-${UNICODE_VERSION}/Binary_Property/${emoji}/ranges.js`
+      `@unicode/unicode-${UNICODE_VERSION}/Binary_Property/${emoji}/ranges.mjs`
     );
 
     result[emoji] = ranges.map((r) => [r.begin, r.end]);
