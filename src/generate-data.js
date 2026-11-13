@@ -1,9 +1,21 @@
 import historical from "./historical.js";
+import aliases from "unicode-property-value-aliases";
 import { writeFile } from "fs/promises";
 
 // Update this and the version in package.json to upgrade to a new
 // release of the Unicode standard.
-const UNICODE_VERSION = "17.0.0";
+const UNICODE_VERSION = "18.0.0";
+
+// Map the long script names used throughout the Unicode data onto their
+// ISO 15924 codes. The first alias of a name is its code; the remaining
+// ones, if any, are deprecated spellings.
+const codes = new Map();
+
+for (const [alias, name] of aliases.get("Script")) {
+  if (!codes.has(name)) {
+    codes.set(name, alias);
+  }
+}
 
 async function generate() {
   const result = {};
@@ -18,10 +30,17 @@ async function generate() {
 
   for (const script of scripts) {
     const { default: ranges } = await import(
-      `@unicode/unicode-${UNICODE_VERSION}/Script/${script}/ranges.js`
+      `@unicode/unicode-${UNICODE_VERSION}/Script/${script}/ranges.mjs`
     );
 
-    result[script] = ranges.map((r) => [r.begin, r.end]);
+    if (!codes.has(script)) {
+      throw new Error(`found no ISO 15924 code for ${script}`);
+    }
+
+    result[script] = {
+      code: codes.get(script),
+      ranges: ranges.map((r) => [r.begin, r.end]),
+    };
   }
 
   // Also include Emoji though technically not a writing script.
@@ -35,18 +54,24 @@ async function generate() {
 
   for (const emoji of emojis) {
     const { default: ranges } = await import(
-      `@unicode/unicode-${UNICODE_VERSION}/Binary_Property/${emoji}/ranges.js`
+      `@unicode/unicode-${UNICODE_VERSION}/Binary_Property/${emoji}/ranges.mjs`
     );
 
-    result[emoji] = ranges.map((r) => [r.begin, r.end]);
+    result[emoji] = {
+      code: null,
+      ranges: ranges.map((r) => [r.begin, r.end]),
+    };
   }
 
   // Add the Private Use Area as a "script".
-  result["PUA"] = [
-    [0xe000, 0xf8ff],
-    [0xf0000, 0xffffd],
-    [0x100000, 0x10fffd],
-  ];
+  result["PUA"] = {
+    code: null,
+    ranges: [
+      [0xe000, 0xf900],
+      [0xf0000, 0xffffe],
+      [0x100000, 0x10fffe],
+    ],
+  };
 
   await writeFile(
     "data/scripts.js",

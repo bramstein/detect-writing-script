@@ -3,16 +3,16 @@ import scripts from "../data/scripts.js";
 // To make this code as fast as possible we create some
 // auxillary data structures.
 const names = Object.keys(scripts);
-const ranges = Object.values(scripts);
+const ranges = Object.values(scripts).map((script) => script.ranges);
 const totals = new Array(names.length).fill(0);
 const counts = new Array(names.length);
 
 // Calculate the total number of codepoints for each script. We
 // can easily do this by summing the number of codepoints in
-// each range and script.
+// each range and script. The upper bound of a range is exclusive.
 for (let i = 0; i < ranges.length; i++) {
   for (let j = 0; j < ranges[i].length; j++) {
-    totals[i] += (ranges[i][j][1] - ranges[i][j][0]) + 1;
+    totals[i] += ranges[i][j][1] - ranges[i][j][0];
   }
 }
 
@@ -31,7 +31,7 @@ function detect(codepoints, threshold) {
         // The ranges don't repeat so we won't find the codepoint again.
         if (
           codepoints[j] >= ranges[i][k][0] &&
-          codepoints[j] <= ranges[i][k][1]
+          codepoints[j] < ranges[i][k][1]
         ) {
           counts[i]++;
           break all; // NOTE: This uses a label to jump out of both loops at once.
